@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Packager;
 
 namespace Message
 {
@@ -23,6 +24,17 @@ namespace Message
         public MainWindow()
         {
             InitializeComponent();
+            
+            //MessageBox.Show(tree.Code("xxxyyzz"));
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //HaffmanCoder.HTree tree = new HaffmanCoder.HTree();
+            var info = HaffmanCoder.Code(@"Статическое кодирование Хаффмана довольно широко применяется в современных алгоритмах сжатия, но не в чистом виде, а как одна из ступеней сжатия в более сложных алгоритмах. Динамический же вариант алгоритма на практике, в последнее время, уступил более гибким и скоростным алгоритмам и применяется в основном только в экспериментальных целях.");
+            label.Content = info.value;
+            
+            label_Copy.Content = HaffmanCoder.Decode(label.Content.ToString()).value;
         }
     }
 }
