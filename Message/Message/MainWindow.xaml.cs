@@ -31,8 +31,8 @@ namespace Message
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //HaffmanCoder.HTree tree = new HaffmanCoder.HTree();
-            var info = HaffmanCoder.Code(@"Статическое кодирование Хаффмана довольно широко применяется в современных алгоритмах сжатия, но не в чистом виде, а как одна из ступеней сжатия в более сложных алгоритмах. Динамический же вариант алгоритма на практике, в последнее время, уступил более гибким и скоростным алгоритмам и применяется в основном только в экспериментальных целях.");
-            label.Content = info.value;
+            var info = HaffmanCoder.Code(@"Статическое кодирование Хаффмана");
+            label.Content = info.CompressedValue;
             
             label_Copy.Content = HaffmanCoder.Decode(label.Content.ToString()).value;
         }

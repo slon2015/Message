@@ -11,11 +11,22 @@ namespace Packager
         public class CodeInfo
         {
             public string value;
+            public string CompressedValue;
             public HTree Coder;
             public CodeInfo(string input)
             {
                 Coder = new HTree();
-                value = Coder.Code(input);
+                string bits = Coder.Code(input);
+                value = bits;
+                string CompressInput = "";
+                while (bits.Length >= 16)
+                {
+                    CompressInput += (char)Convert.ToInt32(bits.Substring(0, 16), 2);
+                    bits = bits.Substring(16);
+                }
+                if(bits.Length!=0)
+                    CompressInput += (char)Convert.ToInt32(bits, 2);
+                CompressedValue = CompressInput;
             }
         }
         public class DecodeInfo
@@ -25,7 +36,17 @@ namespace Packager
             public DecodeInfo(string input)
             {
                 Decoder = new HTree();
-                value = Decoder.Decode(input);
+                string decompressedInput = "";
+                for(int i = 0; i < input.Length; i++)
+                {
+                    string bits = Convert.ToString((int)input[i], 2);
+                    while (bits.Length < 16 && i != input.Length - 1)
+                        bits = "0" + bits;
+                    //while (bits[0] != '1')
+                    //    bits.Remove(0, 1);
+                    decompressedInput += bits;
+                }
+                value = Decoder.Decode(decompressedInput);
             }
         }
         public static CodeInfo Code(string input)
@@ -64,7 +85,7 @@ namespace Packager
                     if (!Contain(c))
                     {
                         var ar = Convert.ToString(c, 2);
-                        while (ar.Length < 16)
+                        while (ar.Length < 12)
                             ar = "0" + ar;
                         code = EndCode + ar;
                         //for (int i = 0; i < ar.Length; i++)
@@ -82,8 +103,8 @@ namespace Packager
             public string Decode(string input)
             {
                 string ret = "";
-                string temp = input.Substring(0, 16);
-                input = input.Substring(16);
+                string temp = input.Substring(0, 12);
+                input = input.Substring(12);
                 char sim = (char)Convert.ToInt32(temp, 2);
                 ret += sim;
                 Add(sim);
@@ -111,8 +132,8 @@ namespace Packager
                                     }
                                     if(node is EscapeNode)
                                     {
-                                        temp = input.Substring(0, 16);
-                                        input = input.Substring(16);
+                                        temp = input.Substring(0, 12);
+                                        input = input.Substring(12);
                                         sim = (char)Convert.ToInt32(temp, 2);
                                         ret += sim;
                                         Add(sim);

@@ -8,9 +8,6 @@
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
     <Grid>
         <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="82,83,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="58,177,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="143,177,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label3" Content="Label" HorizontalAlignment="Left" Margin="237,177,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="Label" HorizontalAlignment="Left" Margin="82,121,0,0" VerticalAlignment="Top"/>
 
     </Grid>
