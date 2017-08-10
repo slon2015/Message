@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ffdce8bb8744bdcadc5cc89f0ad95de" Name="Diagram1" ZoomLevel="85" >
+        <EntityTypeShape EntityType="MessageDB.User" Width="1.5" PointX="4.125" PointY="1.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MessageDB.User_Meta" Width="1.5" PointX="6.375" PointY="1.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="MessageDB.Chat" Width="1.5" PointX="7.875" PointY="5.25" FillColor="Red" IsExpanded="false" />
+        <EntityTypeShape EntityType="MessageDB.ChatMembers" Width="1.5" PointX="5.25" PointY="4.125" FillColor="Red" IsExpanded="false" />
+        <EntityTypeShape EntityType="MessageDB.Mesages" Width="1.5" PointX="2.375" PointY="5.25" FillColor="Red" IsExpanded="false" />
+        <EntityTypeShape EntityType="MessageDB.Chat_Meta" Width="1.5" PointX="10.5" PointY="5.25" FillColor="Red" IsExpanded="false" />
+        <AssociationConnector Association="MessageDB.UserUser_Meta" />
+        <AssociationConnector Association="MessageDB.UserChat" />
+        <AssociationConnector Association="MessageDB.UsersInvitesInChats" />
+        <AssociationConnector Association="MessageDB.UsersChats" />
+        <AssociationConnector Association="MessageDB.MesagesUser" />
+        <AssociationConnector Association="MessageDB.ChatChatMembers" />
+        <AssociationConnector Association="MessageDB.MesagesChat" />
+        <AssociationConnector Association="MessageDB.ChatChat_Meta" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

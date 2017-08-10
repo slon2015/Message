@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MessageDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MessageDBStoreContainer">
+    <EntitySet Name="UserSet" EntityType="MessageDB.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User_MetaSet" EntityType="MessageDB.Store.User_MetaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ChatSet" EntityType="MessageDB.Store.ChatSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ChatMembersSet" EntityType="MessageDB.Store.ChatMembersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MesagesSet" EntityType="MessageDB.Store.MesagesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Chat_MetaSet" EntityType="MessageDB.Store.Chat_MetaSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserUser_Meta" Association="MessageDB.Store.UserUser_Meta">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="User_Meta" EntitySet="User_MetaSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserChat" Association="MessageDB.Store.UserChat">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Chat" EntitySet="ChatSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsersInvitesInChats" Association="MessageDB.Store.UsersInvitesInChats">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsersChats" Association="MessageDB.Store.UsersChats">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+    </AssociationSet>
+    <AssociationSet Name="MesagesUser" Association="MessageDB.Store.MesagesUser">
+      <End Role="Mesages" EntitySet="MesagesSet" />
+      <End Role="User" EntitySet="UserSet" />
+    </AssociationSet>
+    <AssociationSet Name="ChatChatMembers" Association="MessageDB.Store.ChatChatMembers">
+      <End Role="Chat" EntitySet="ChatSet" />
+      <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+    </AssociationSet>
+    <AssociationSet Name="MesagesChat" Association="MessageDB.Store.MesagesChat">
+      <End Role="Mesages" EntitySet="MesagesSet" />
+      <End Role="Chat" EntitySet="ChatSet" />
+    </AssociationSet>
+    <AssociationSet Name="ChatChat_Meta" Association="MessageDB.Store.ChatChat_Meta">
+      <End Role="Chat" EntitySet="ChatSet" />
+      <End Role="Chat_Meta" EntitySet="Chat_MetaSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nick" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_MetaSet">
+    <Key>
+      <PropertyRef Name="UserMetaID" />
+    </Key>
+    <Property Name="UserMetaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ChatSet">
+    <Key>
+      <PropertyRef Name="ChatID" />
+    </Key>
+    <Property Name="ChatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminID" Type="int" Nullable="false" />
+    <Property Name="CreationTime" Type="datetime" Nullable="false" />
+    <Property Name="ChatName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ChatMembersSet">
+    <Key>
+      <PropertyRef Name="ChatMembersID" />
+    </Key>
+    <Property Name="ChatMembersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChatID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="InvitingUser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MesagesSet">
+    <Key>
+      <PropertyRef Name="MessageID" />
+    </Key>
+    <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChatID" Type="int" Nullable="false" />
+    <Property Name="AuthorID" Type="int" Nullable="false" />
+    <Property Name="MessageText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreationTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Chat_MetaSet">
+    <Key>
+      <PropertyRef Name="ChatMetaID" />
+    </Key>
+    <Property Name="ChatMetaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChatID" Type="int" Nullable="false" />
+    <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="UserUser_Meta">
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <End Role="User_Meta" Type="MessageDB.Store.User_MetaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="User_Meta">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserChat">
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <End Role="Chat" Type="MessageDB.Store.ChatSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Chat">
+        <PropertyRef Name="AdminID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersInvitesInChats">
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <End Role="ChatMembers" Type="MessageDB.Store.ChatMembersSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ChatMembers">
+        <PropertyRef Name="InvitingUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersChats">
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <End Role="ChatMembers" Type="MessageDB.Store.ChatMembersSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ChatMembers">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MesagesUser">
+    <End Role="Mesages" Type="MessageDB.Store.MesagesSet" Multiplicity="*" />
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Mesages">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ChatChatMembers">
+    <End Role="Chat" Type="MessageDB.Store.ChatSet" Multiplicity="1" />
+    <End Role="ChatMembers" Type="MessageDB.Store.ChatMembersSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chat">
+        <PropertyRef Name="ChatID" />
+      </Principal>
+      <Dependent Role="ChatMembers">
+        <PropertyRef Name="ChatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MesagesChat">
+    <End Role="Mesages" Type="MessageDB.Store.MesagesSet" Multiplicity="*" />
+    <End Role="Chat" Type="MessageDB.Store.ChatSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Chat">
+        <PropertyRef Name="ChatID" />
+      </Principal>
+      <Dependent Role="Mesages">
+        <PropertyRef Name="ChatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ChatChat_Meta">
+    <End Role="Chat" Type="MessageDB.Store.ChatSet" Multiplicity="1" />
+    <End Role="Chat_Meta" Type="MessageDB.Store.Chat_MetaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chat">
+        <PropertyRef Name="ChatID" />
+      </Principal>
+      <Dependent Role="Chat_Meta">
+        <PropertyRef Name="ChatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MessageDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MessageDBContainer1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="MessageDB.User" />
+          <EntitySet Name="User_MetaSet" EntityType="MessageDB.User_Meta" />
+          <EntitySet Name="ChatSet" EntityType="MessageDB.Chat" />
+          <EntitySet Name="ChatMembersSet" EntityType="MessageDB.ChatMembers" />
+          <EntitySet Name="MesagesSet" EntityType="MessageDB.Mesages" />
+          <EntitySet Name="Chat_MetaSet" EntityType="MessageDB.Chat_Meta" />
+          <AssociationSet Name="UserUser_Meta" Association="MessageDB.UserUser_Meta">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="User_Meta" EntitySet="User_MetaSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserChat" Association="MessageDB.UserChat">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Chat" EntitySet="ChatSet" />
+          </AssociationSet>
+          <AssociationSet Name="UsersInvitesInChats" Association="MessageDB.UsersInvitesInChats">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+          </AssociationSet>
+          <AssociationSet Name="UsersChats" Association="MessageDB.UsersChats">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+          </AssociationSet>
+          <AssociationSet Name="MesagesUser" Association="MessageDB.MesagesUser">
+            <End Role="Mesages" EntitySet="MesagesSet" />
+            <End Role="User" EntitySet="UserSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChatChatMembers" Association="MessageDB.ChatChatMembers">
+            <End Role="Chat" EntitySet="ChatSet" />
+            <End Role="ChatMembers" EntitySet="ChatMembersSet" />
+          </AssociationSet>
+          <AssociationSet Name="MesagesChat" Association="MessageDB.MesagesChat">
+            <End Role="Mesages" EntitySet="MesagesSet" />
+            <End Role="Chat" EntitySet="ChatSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChatChat_Meta" Association="MessageDB.ChatChat_Meta">
+            <End Role="Chat" EntitySet="ChatSet" />
+            <End Role="Chat_Meta" EntitySet="Chat_MetaSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pass" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nick" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Meta" Relationship="MessageDB.UserUser_Meta" FromRole="User" ToRole="User_Meta" />
+          <NavigationProperty Name="Chat" Relationship="MessageDB.UserChat" FromRole="User" ToRole="Chat" />
+          <NavigationProperty Name="UsersInvitesInChats" Relationship="MessageDB.UsersInvitesInChats" FromRole="User" ToRole="ChatMembers" />
+          <NavigationProperty Name="UsersChats" Relationship="MessageDB.UsersChats" FromRole="User" ToRole="ChatMembers" />
+          <NavigationProperty Name="Mesages" Relationship="MessageDB.MesagesUser" FromRole="User" ToRole="Mesages" />
+        </EntityType>
+        <EntityType Name="User_Meta">
+          <Key>
+            <PropertyRef Name="UserMetaID" />
+          </Key>
+          <Property Name="UserMetaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="MessageDB.UserUser_Meta" FromRole="User_Meta" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="ChatID" />
+          </Key>
+          <Property Name="ChatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="AdminID" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ChatName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="MessageDB.UserChat" FromRole="Chat" ToRole="User" />
+          <NavigationProperty Name="ChatMembers" Relationship="MessageDB.ChatChatMembers" FromRole="Chat" ToRole="ChatMembers" />
+          <NavigationProperty Name="Mesages" Relationship="MessageDB.MesagesChat" FromRole="Chat" ToRole="Mesages" />
+          <NavigationProperty Name="Chat_Meta" Relationship="MessageDB.ChatChat_Meta" FromRole="Chat" ToRole="Chat_Meta" />
+        </EntityType>
+        <EntityType Name="ChatMembers">
+          <Key>
+            <PropertyRef Name="ChatMembersID" />
+          </Key>
+          <Property Name="ChatMembersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="InvitingUser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MessageDB.UsersInvitesInChats" FromRole="ChatMembers" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="MessageDB.UsersChats" FromRole="ChatMembers" ToRole="User" />
+          <NavigationProperty Name="Chat" Relationship="MessageDB.ChatChatMembers" FromRole="ChatMembers" ToRole="Chat" />
+        </EntityType>
+        <EntityType Name="Mesages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatID" Type="Int32" Nullable="false" />
+          <Property Name="AuthorID" Type="Int32" Nullable="false" />
+          <Property Name="MessageText" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="MessageDB.MesagesUser" FromRole="Mesages" ToRole="User" />
+          <NavigationProperty Name="Chat" Relationship="MessageDB.MesagesChat" FromRole="Mesages" ToRole="Chat" />
+        </EntityType>
+        <EntityType Name="Chat_Meta">
+          <Key>
+            <PropertyRef Name="ChatMetaID" />
+          </Key>
+          <Property Name="ChatMetaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatID" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Chat" Relationship="MessageDB.ChatChat_Meta" FromRole="Chat_Meta" ToRole="Chat" />
+        </EntityType>
+        <Association Name="UserUser_Meta">
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <End Type="MessageDB.User_Meta" Role="User_Meta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="User_Meta">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserChat">
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <End Type="MessageDB.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersInvitesInChats">
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <End Type="MessageDB.ChatMembers" Role="ChatMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ChatMembers">
+              <PropertyRef Name="InvitingUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersChats">
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <End Type="MessageDB.ChatMembers" Role="ChatMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ChatMembers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MesagesUser">
+          <End Type="MessageDB.Mesages" Role="Mesages" Multiplicity="*" />
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Mesages">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChatChatMembers">
+          <End Type="MessageDB.Chat" Role="Chat" Multiplicity="1" />
+          <End Type="MessageDB.ChatMembers" Role="ChatMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatID" />
+            </Principal>
+            <Dependent Role="ChatMembers">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MesagesChat">
+          <End Type="MessageDB.Mesages" Role="Mesages" Multiplicity="*" />
+          <End Type="MessageDB.Chat" Role="Chat" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatID" />
+            </Principal>
+            <Dependent Role="Mesages">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChatChat_Meta">
+          <End Type="MessageDB.Chat" Role="Chat" Multiplicity="1" />
+          <End Type="MessageDB.Chat_Meta" Role="Chat_Meta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatID" />
+            </Principal>
+            <Dependent Role="Chat_Meta">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MessageDBStoreContainer" CdmEntityContainer="MessageDBContainer1">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Nick" ColumnName="Nick" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_MetaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.User_Meta)">
+        <MappingFragment StoreEntitySet="User_MetaSet">
+          <ScalarProperty Name="UserMetaID" ColumnName="UserMetaID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChatSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.Chat)">
+        <MappingFragment StoreEntitySet="ChatSet">
+          <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+          <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+          <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+          <ScalarProperty Name="ChatName" ColumnName="ChatName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChatMembersSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.ChatMembers)">
+        <MappingFragment StoreEntitySet="ChatMembersSet">
+          <ScalarProperty Name="ChatMembersID" ColumnName="ChatMembersID" />
+          <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="InvitingUser" ColumnName="InvitingUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MesagesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.Mesages)">
+        <MappingFragment StoreEntitySet="MesagesSet">
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+          <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+          <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+          <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chat_MetaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.Chat_Meta)">
+        <MappingFragment StoreEntitySet="Chat_MetaSet">
+          <ScalarProperty Name="ChatMetaID" ColumnName="ChatMetaID" />
+          <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
