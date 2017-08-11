@@ -22,15 +22,6 @@ namespace ASPWithoutWAPI {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// EmailLabel элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EmailLabel;
-        
-        /// <summary>
         /// EmailBox элемент управления.
         /// </summary>
         /// <remarks>
@@ -40,13 +31,13 @@ namespace ASPWithoutWAPI {
         protected global::System.Web.UI.WebControls.TextBox EmailBox;
         
         /// <summary>
-        /// NickLabel элемент управления.
+        /// EmailLabel элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label NickLabel;
+        protected global::System.Web.UI.WebControls.Label EmailLabel;
         
         /// <summary>
         /// NickBox элемент управления.
@@ -58,13 +49,13 @@ namespace ASPWithoutWAPI {
         protected global::System.Web.UI.WebControls.TextBox NickBox;
         
         /// <summary>
-        /// PassLabel элемент управления.
+        /// NickLabel элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PassLabel;
+        protected global::System.Web.UI.WebControls.Label NickLabel;
         
         /// <summary>
         /// PassBox элемент управления.
@@ -76,13 +67,13 @@ namespace ASPWithoutWAPI {
         protected global::System.Web.UI.WebControls.TextBox PassBox;
         
         /// <summary>
-        /// TPassLabel элемент управления.
+        /// PassLabel элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TPassLabel;
+        protected global::System.Web.UI.WebControls.Label PassLabel;
         
         /// <summary>
         /// TPassBox элемент управления.
@@ -94,6 +85,15 @@ namespace ASPWithoutWAPI {
         protected global::System.Web.UI.WebControls.TextBox TPassBox;
         
         /// <summary>
+        /// TPassLabel элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TPassLabel;
+        
+        /// <summary>
         /// Button1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -101,5 +101,14 @@ namespace ASPWithoutWAPI {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// StatusLabel элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label StatusLabel;
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/10/2017 19:04:16
+-- Date Created: 08/11/2017 15:29:27
 -- Generated from EDMX file: C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ASPNetTest\ASPWithoutWAPI\MessageDB.edmx
 -- --------------------------------------------------
 
@@ -17,8 +17,20 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_ChatChat_Meta]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Chat_MetaSet] DROP CONSTRAINT [FK_ChatChat_Meta];
+IF OBJECT_ID(N'[dbo].[FK_UserUser_Meta]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[User_MetaSet] DROP CONSTRAINT [FK_UserUser_Meta];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserChat]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ChatSet] DROP CONSTRAINT [FK_UserChat];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersInvitesInChats]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ChatMembersSet] DROP CONSTRAINT [FK_UsersInvitesInChats];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersChats]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ChatMembersSet] DROP CONSTRAINT [FK_UsersChats];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MesagesUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MesagesSet] DROP CONSTRAINT [FK_MesagesUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ChatChatMembers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ChatMembersSet] DROP CONSTRAINT [FK_ChatChatMembers];
@@ -26,43 +38,37 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_MesagesChat]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MesagesSet] DROP CONSTRAINT [FK_MesagesChat];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MesagesUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MesagesSet] DROP CONSTRAINT [FK_MesagesUser];
+IF OBJECT_ID(N'[dbo].[FK_ChatChat_Meta]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Chat_MetaSet] DROP CONSTRAINT [FK_ChatChat_Meta];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserChat]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ChatSet] DROP CONSTRAINT [FK_UserChat];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserChatMembers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ChatMembersSet] DROP CONSTRAINT [FK_UserChatMembers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserChatMembers1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ChatMembersSet] DROP CONSTRAINT [FK_UserChatMembers1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserUser_Meta]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[User_MetaSet] DROP CONSTRAINT [FK_UserUser_Meta];
+IF OBJECT_ID(N'[dbo].[FK_UserAccessToken]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AccessTokenSet] DROP CONSTRAINT [FK_UserAccessToken];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Chat_MetaSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Chat_MetaSet];
-GO
-IF OBJECT_ID(N'[dbo].[ChatMembersSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ChatMembersSet];
-GO
-IF OBJECT_ID(N'[dbo].[ChatSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ChatSet];
-GO
-IF OBJECT_ID(N'[dbo].[MesagesSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MesagesSet];
+IF OBJECT_ID(N'[dbo].[UserSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserSet];
 GO
 IF OBJECT_ID(N'[dbo].[User_MetaSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[User_MetaSet];
 GO
-IF OBJECT_ID(N'[dbo].[UserSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserSet];
+IF OBJECT_ID(N'[dbo].[ChatSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ChatSet];
+GO
+IF OBJECT_ID(N'[dbo].[ChatMembersSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ChatMembersSet];
+GO
+IF OBJECT_ID(N'[dbo].[MesagesSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MesagesSet];
+GO
+IF OBJECT_ID(N'[dbo].[Chat_MetaSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Chat_MetaSet];
+GO
+IF OBJECT_ID(N'[dbo].[AccessTokenSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AccessTokenSet];
 GO
 
 -- --------------------------------------------------
@@ -124,6 +130,15 @@ CREATE TABLE [dbo].[Chat_MetaSet] (
 );
 GO
 
+-- Creating table 'AccessTokenSet'
+CREATE TABLE [dbo].[AccessTokenSet] (
+    [UserID] int IDENTITY(1,1) NOT NULL,
+    [Token] nvarchar(max)  NOT NULL,
+    [CreationTime] datetime  NOT NULL,
+    [DeadTime] datetime  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -162,6 +177,12 @@ GO
 ALTER TABLE [dbo].[Chat_MetaSet]
 ADD CONSTRAINT [PK_Chat_MetaSet]
     PRIMARY KEY CLUSTERED ([ChatMetaID] ASC);
+GO
+
+-- Creating primary key on [UserID] in table 'AccessTokenSet'
+ALTER TABLE [dbo].[AccessTokenSet]
+ADD CONSTRAINT [PK_AccessTokenSet]
+    PRIMARY KEY CLUSTERED ([UserID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -286,6 +307,15 @@ GO
 CREATE INDEX [IX_FK_ChatChat_Meta]
 ON [dbo].[Chat_MetaSet]
     ([ChatID]);
+GO
+
+-- Creating foreign key on [UserID] in table 'AccessTokenSet'
+ALTER TABLE [dbo].[AccessTokenSet]
+ADD CONSTRAINT [FK_UserAccessToken]
+    FOREIGN KEY ([UserID])
+    REFERENCES [dbo].[UserSet]
+        ([UserID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- --------------------------------------------------

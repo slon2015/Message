@@ -12,6 +12,7 @@
     <EntitySet Name="ChatMembersSet" EntityType="MessageDB.Store.ChatMembersSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MesagesSet" EntityType="MessageDB.Store.MesagesSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Chat_MetaSet" EntityType="MessageDB.Store.Chat_MetaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AccessTokenSet" EntityType="MessageDB.Store.AccessTokenSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserUser_Meta" Association="MessageDB.Store.UserUser_Meta">
       <End Role="User" EntitySet="UserSet" />
       <End Role="User_Meta" EntitySet="User_MetaSet" />
@@ -43,6 +44,10 @@
     <AssociationSet Name="ChatChat_Meta" Association="MessageDB.Store.ChatChat_Meta">
       <End Role="Chat" EntitySet="ChatSet" />
       <End Role="Chat_Meta" EntitySet="Chat_MetaSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserAccessToken" Association="MessageDB.Store.UserAccessToken">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="AccessToken" EntitySet="AccessTokenSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
@@ -99,6 +104,15 @@
     <Property Name="ChatID" Type="int" Nullable="false" />
     <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccessTokenSet">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreationTime" Type="datetime" Nullable="false" />
+    <Property Name="DeadTime" Type="datetime" Nullable="true" />
   </EntityType>
   <Association Name="UserUser_Meta">
     <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
@@ -196,6 +210,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserAccessToken">
+    <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
+    <End Role="AccessToken" Type="MessageDB.Store.AccessTokenSet" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AccessToken">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -239,6 +265,11 @@
             <End Role="Chat" EntitySet="ChatSet" />
             <End Role="Chat_Meta" EntitySet="Chat_MetaSet" />
           </AssociationSet>
+          <EntitySet Name="AccessTokenSet" EntityType="MessageDB.AccessToken" />
+          <AssociationSet Name="UserAccessToken" Association="MessageDB.UserAccessToken">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="AccessToken" EntitySet="AccessTokenSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -253,6 +284,7 @@
           <NavigationProperty Name="UsersInvitesInChats" Relationship="MessageDB.UsersInvitesInChats" FromRole="User" ToRole="ChatMembers" />
           <NavigationProperty Name="UsersChats" Relationship="MessageDB.UsersChats" FromRole="User" ToRole="ChatMembers" />
           <NavigationProperty Name="Mesages" Relationship="MessageDB.MesagesUser" FromRole="User" ToRole="Mesages" />
+          <NavigationProperty Name="AccessToken" Relationship="MessageDB.UserAccessToken" FromRole="User" ToRole="AccessToken" />
         </EntityType>
         <EntityType Name="User_Meta">
           <Key>
@@ -407,6 +439,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AccessToken">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="MessageDB.UserAccessToken" FromRole="AccessToken" ToRole="User" />
+          <Property Name="Token" Type="String" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" />
+          <Property Name="DeadTime" Type="DateTime" Nullable="true" />
+        </EntityType>
+        <Association Name="UserAccessToken">
+          <End Type="MessageDB.User" Role="User" Multiplicity="1" />
+          <End Type="MessageDB.AccessToken" Role="AccessToken" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AccessToken">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -471,6 +525,16 @@
           <ScalarProperty Name="ChatID" ColumnName="ChatID" />
           <ScalarProperty Name="Key" ColumnName="Key" />
           <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccessTokenSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessageDB.AccessToken)">
+        <MappingFragment StoreEntitySet="AccessTokenSet">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+          <ScalarProperty Name="DeadTime" ColumnName="DeadTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

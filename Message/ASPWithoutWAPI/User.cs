@@ -39,5 +39,6 @@ namespace ASPWithoutWAPI
         public virtual ICollection<ChatMembers> UsersChats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mesages> Mesages { get; set; }
+        public virtual AccessToken AccessToken { get; set; }
     }
 }

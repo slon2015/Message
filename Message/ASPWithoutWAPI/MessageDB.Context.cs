@@ -31,5 +31,6 @@ namespace ASPWithoutWAPI
         public virtual DbSet<ChatMembers> ChatMembersSet { get; set; }
         public virtual DbSet<Mesages> MesagesSet { get; set; }
         public virtual DbSet<Chat_Meta> Chat_MetaSet { get; set; }
+        public virtual DbSet<AccessToken> AccessTokenSet { get; set; }
     }
 }

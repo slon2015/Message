@@ -19,6 +19,8 @@
         <AssociationConnector Association="MessageDB.ChatChatMembers" />
         <AssociationConnector Association="MessageDB.MesagesChat" />
         <AssociationConnector Association="MessageDB.ChatChat_Meta" />
+        <EntityTypeShape EntityType="MessageDB.AccessToken" Width="1.5" PointX="0.5" PointY="1.875" IsExpanded="false" FillColor="0, 192, 0" />
+        <AssociationConnector Association="MessageDB.UserAccessToken" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
