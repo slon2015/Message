@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/11/2017 15:29:27
--- Generated from EDMX file: C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ASPNetTest\ASPWithoutWAPI\MessageDB.edmx
+-- Date Created: 08/16/2017 15:59:36
+-- Generated from EDMX file: C:\Users\lenovo\Source\Repos\Message\Message\ASPWithoutWAPI\MessageDB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [MyMessageDB];
+USE [MyMessageDatabase];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -132,7 +132,7 @@ GO
 
 -- Creating table 'AccessTokenSet'
 CREATE TABLE [dbo].[AccessTokenSet] (
-    [UserID] int IDENTITY(1,1) NOT NULL,
+    [UserID] int  NOT NULL,
     [Token] nvarchar(max)  NOT NULL,
     [CreationTime] datetime  NOT NULL,
     [DeadTime] datetime  NULL
@@ -179,10 +179,10 @@ ADD CONSTRAINT [PK_Chat_MetaSet]
     PRIMARY KEY CLUSTERED ([ChatMetaID] ASC);
 GO
 
--- Creating primary key on [UserID] in table 'AccessTokenSet'
+-- Creating primary key on [Token] in table 'AccessTokenSet'
 ALTER TABLE [dbo].[AccessTokenSet]
 ADD CONSTRAINT [PK_AccessTokenSet]
-    PRIMARY KEY CLUSTERED ([UserID] ASC);
+    PRIMARY KEY CLUSTERED ([Token] ASC);
 GO
 
 -- --------------------------------------------------
@@ -316,6 +316,12 @@ ADD CONSTRAINT [FK_UserAccessToken]
     REFERENCES [dbo].[UserSet]
         ([UserID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserAccessToken'
+CREATE INDEX [IX_FK_UserAccessToken]
+ON [dbo].[AccessTokenSet]
+    ([UserID]);
 GO
 
 -- --------------------------------------------------

@@ -22,6 +22,7 @@ namespace ASPWithoutWAPI
             this.UsersInvitesInChats = new HashSet<ChatMembers>();
             this.UsersChats = new HashSet<ChatMembers>();
             this.Mesages = new HashSet<Mesages>();
+            this.AccessToken = new HashSet<AccessToken>();
         }
     
         public int UserID { get; set; }
@@ -39,6 +40,7 @@ namespace ASPWithoutWAPI
         public virtual ICollection<ChatMembers> UsersChats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mesages> Mesages { get; set; }
-        public virtual AccessToken AccessToken { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AccessToken> AccessToken { get; set; }
     }
 }

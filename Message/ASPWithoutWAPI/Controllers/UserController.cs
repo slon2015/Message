@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using ASPWithoutWAPI.App_Start;
+using Newtonsoft.Json;
 
 namespace ASPWithoutWAPI.Controllers
 {
@@ -20,8 +21,28 @@ namespace ASPWithoutWAPI.Controllers
             [HttpPost]
         public string LogIn(string Email, string Password)
         {
-            if (dbContext.UserSet.FirstOrDefault(u => MD5Crypto.getHashOfString(u.Email) == Email && u.Pass == Password) != null)
-                return "LogIn success";
+            ASPWithoutWAPI.User user = dbContext.UserSet.FirstOrDefault(u => u.Email == Email && u.Pass == Password);
+            if (user != null)
+            {
+                AccessToken token = dbContext.AccessTokenSet.Create();
+
+                string hash;
+                Random rand = new Random();
+                do
+                {
+                    hash = MD5Crypto.getHashOfString(rand.Next().ToString());
+                } while (dbContext.AccessTokenSet.FirstOrDefault(to => to.Token == hash) != null);
+                user.AccessToken.Add(new AccessToken()
+                {
+                    Token = hash,
+                    CreationTime = DateTime.Now,
+                    DeadTime = DateTime.Now.AddDays(1)
+                });
+
+                dbContext.SaveChanges();
+                AccessToken t = user.AccessToken.Last();
+                return JsonConvert.SerializeObject(new {UserID = t.UserID, Token = t.Token, CreationTime = t.CreationTime ,DeadTime = t.DeadTime});
+            }
             else
                 return "Login failed";
         }

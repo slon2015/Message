@@ -107,9 +107,9 @@
   </EntityType>
   <EntityType Name="AccessTokenSet">
     <Key>
-      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Token" />
     </Key>
-    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreationTime" Type="datetime" Nullable="false" />
     <Property Name="DeadTime" Type="datetime" Nullable="true" />
@@ -212,7 +212,7 @@
   </Association>
   <Association Name="UserAccessToken">
     <End Role="User" Type="MessageDB.Store.UserSet" Multiplicity="1" />
-    <End Role="AccessToken" Type="MessageDB.Store.AccessTokenSet" Multiplicity="0..1" />
+    <End Role="AccessToken" Type="MessageDB.Store.AccessTokenSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="UserID" />
@@ -441,9 +441,9 @@
         </Association>
         <EntityType Name="AccessToken">
           <Key>
-            <PropertyRef Name="UserID" />
+            <PropertyRef Name="Token" />
           </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="User" Relationship="MessageDB.UserAccessToken" FromRole="AccessToken" ToRole="User" />
           <Property Name="Token" Type="String" Nullable="false" />
           <Property Name="CreationTime" Type="DateTime" Nullable="false" />
@@ -451,7 +451,7 @@
         </EntityType>
         <Association Name="UserAccessToken">
           <End Type="MessageDB.User" Role="User" Multiplicity="1" />
-          <End Type="MessageDB.AccessToken" Role="AccessToken" Multiplicity="0..1" />
+          <End Type="MessageDB.AccessToken" Role="AccessToken" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="UserID" />
@@ -531,8 +531,8 @@
     <EntitySetMapping Name="AccessTokenSet">
       <EntityTypeMapping TypeName="IsTypeOf(MessageDB.AccessToken)">
         <MappingFragment StoreEntitySet="AccessTokenSet">
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
           <ScalarProperty Name="DeadTime" ColumnName="DeadTime" />
         </MappingFragment>

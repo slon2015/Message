@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager", "Packager\Packag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager.Test", "HaffmanCoder.Test\Packager.Test.csproj", "{AD5E7BDE-609B-4C1C-82D7-017D75DEA441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPWithoutWAPI", "..\..\..\..\Documents\Visual Studio 2017\Projects\ASPNetTest\ASPWithoutWAPI\ASPWithoutWAPI.csproj", "{DBA30BED-4E95-4F3C-897D-12248DAEF945}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPWithoutWAPI", "ASPWithoutWAPI\ASPWithoutWAPI.csproj", "{DBA30BED-4E95-4F3C-897D-12248DAEF945}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

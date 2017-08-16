@@ -99,9 +99,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\MyMessageDB.mdf" />
-    <Content Include="App_Data\MyMessageDB_log.ldf">
-      <DependentUpon>MyMessageDB.mdf</DependentUpon>
+    <Content Include="App_Data\MyMessageDatabase.mdf" />
+    <Content Include="App_Data\MyMessageDatabase_log.ldf">
+      <DependentUpon>MyMessageDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -122,7 +122,6 @@
     <Content Include="Register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="App_Data\Accounts.json" />
     <Content Include="ChatHandler.ashx" />
     <EntityDeploy Include="MessageDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
